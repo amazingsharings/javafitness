@@ -1,6 +1,6 @@
 # problem: Container With Most Water
 # author: everpuck
-# date: 2/20/2019
+# date: 4/24/2019
 
 
 class Solution:
@@ -16,10 +16,13 @@ class Solution:
 
     def maxArea(self, height: 'List[int]') -> 'int':
         max_area = 0
-        for i in range(len(height) - 1):
-            for j in range(i + 1, len(height)):
-                if (j - i) * min(height[i], height[j]) > max_area:
-                    max_area = (j - i) * min(height[i], height[j])
+        left, right = 0, len(height) - 1
+        while left < right:
+            max_area = max(max_area, min(height[left], height[right]) * (right - left))
+            if height[left] < height[right]:
+                left += 1
+            else:
+                right -= 1
         return max_area
 
 if __name__ == '__main__':
